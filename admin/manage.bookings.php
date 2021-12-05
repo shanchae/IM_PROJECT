@@ -63,8 +63,9 @@
                                     <td><?php echo $customer_name; ?></td>
                                     <td><?php echo $customer_contact_no; ?></td>
                                     <td><?php echo $customer_email; ?></td>
-                                    <td><?php echo $receipt; ?></td>
                                     <td><?php echo $status; ?></td>
+                                    <td><?php echo $receipt; ?></td>
+                                    
                                     <td class="btn-st">
                                         <a href="<?php echo SITEURL; ?>admin/update.booking.php?id=<?php echo $id; ?>" class="btn-green btn">Update</a>
                                        

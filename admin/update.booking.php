@@ -36,8 +36,8 @@
 
             <form action="" method="POST" class="form">
                <div>
-                    <label for="event">Event ID:</label>
-                    <input type="text" name="event" value="<?php echo $event; ?>">  
+                    <label>Event ID:</label>
+                    <p><?php echo $event; ?></p>  
                </div>
                <div>
                     <label for="name">Customer Name:</label>
@@ -53,7 +53,7 @@
                </div>
                <div>
                     <label for="receipt">Receipt:</label>
-                    <input type="text" name="receipt" value="<?php echo $receipt; ?>">  
+                    <p><?php echo $receipt; ?></p>  
                </div>
                <div>
                     <label for="status">Status:</label>
@@ -66,7 +66,7 @@
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                <button class="button" type="submit" name="submit">Submit</button>
                <br><br>
-               <a href="<?php echo SITEURL; ?>admin/update.event-details.php?id=<?php echo $event; ?>&booking=<?php echo $id; ?>" class="btn-green btn">Go to event details</a>
+               <a href="<?php echo SITEURL; ?>admin/update.event-details.php?id=<?php echo $event; ?>&booking=<?php echo $id; ?>" class="btn-blue btn">Go to event details</a>
            </form>
         </div>
     </div>
@@ -76,22 +76,19 @@
 
     if (isset($_POST['submit'])){
         $id = $_POST['id'];
-        $event = $_POST['event'];
         $customer_name = $_POST['name'];
         $customer_contact_no = $_POST['number'];
         $customer_email = $_POST['email'];
-        $receipt = $_POST['receipt'];
         $status = $_POST['status'];
+
 
         //SQL query to to update admin
         $sql = "UPDATE bookings
-            SET eventID = '$event',
-            customer_name = '$customer_name',
-            customer_contact_no = $customer_contact_no,
+            SET customer_name = '$customer_name',
+            customer_contact_no = '$customer_contact_no',
             customer_email = '$customer_email',
-            receiptID = '$receipt',
-            status = '$status',
-            WHERE id = '$id';";
+            status = '$status'
+            WHERE id = '$id;'";
 
         //to execute the query
 
