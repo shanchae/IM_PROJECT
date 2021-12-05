@@ -22,6 +22,7 @@
 
                     if($count == 1){
                         $row = mysqli_fetch_assoc($res);
+                        $id = $row['id'];
                         $event = $row['event_type'];
                         $start = $row['startTime'];
                         $end = $row['endTime'];
@@ -54,7 +55,6 @@
                     <label for="address">Address:</label>
                     <input type="text" name="address" value="<?php echo $eventAddress; ?>">  
                </div>
-                <input type="hidden" name="id" value="<?php echo $id; ?>">
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                <button class="button" type="submit" name="submit">Submit</button>
            </form>

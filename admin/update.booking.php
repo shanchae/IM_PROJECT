@@ -66,7 +66,7 @@
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                <button class="button" type="submit" name="submit">Submit</button>
                <br><br>
-               <a href="<?php echo SITEURL; ?>admin/update.event-details.php?$id=<?php echo $event; ?>&booking=<?php echo $id; ?>" class="btn-green btn">Go to event details</a>
+               <a href="<?php echo SITEURL; ?>admin/update.event-details.php?id=<?php echo $event; ?>&booking=<?php echo $id; ?>" class="btn-green btn">Go to event details</a>
            </form>
         </div>
     </div>
@@ -85,13 +85,13 @@
 
         //SQL query to to update admin
         $sql = "UPDATE bookings
-            SET eventID = $event,
+            SET eventID = '$event',
             customer_name = '$customer_name',
             customer_contact_no = $customer_contact_no,
             customer_email = '$customer_email',
             receiptID = '$receipt',
             status = '$status',
-            WHERE id = $id;";
+            WHERE id = '$id';";
 
         //to execute the query
 
