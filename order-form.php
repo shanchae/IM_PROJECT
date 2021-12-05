@@ -50,7 +50,7 @@
             type = (
                 SELECT id
                 FROM menus_types
-                WHERE id = $menu;);";
+                WHERE id = $menu);";
             
             $res = mysqli_query($conn, $sql);
         }
@@ -66,37 +66,15 @@
             type = (
                 SELECT id
                 FROM extrass_types
-                WHERE id = $extra;);";
+                WHERE id = $extra);";
 
             $res_ = mysqli_query($conn, $sql_);
         }
 
-        //SQL query to get menu total
-        $sql_menu_total = "SELECT SUM(t.price) AS 'total'
-            FROM menus_types t, menus_bookings b
-            WHERE t.id = b.type
-            AND b.bookingID = '$booking_id';";
-
-        $res_menu = mysqli_query($conn, $sql_menu_total);
-        //get result
-        $row_menu = mysqli_fetch_assoc($res_menu);
-        $menu_total = $row_menu['total'];
-
-        //SQL query to get extras total
-        $sql_extras_total = "SELECT SUM(t.price) AS 'total'
-            FROM extras_types t, extras_bookings b
-            WHERE t.id = b.type
-            AND b.bookingID = '$booking_id';";
-
-        $res_extras = mysqli_query($conn, $sql_extras_total);
-        //get result
-        $row_extras = mysqli_fetch_assoc($res_extras);
-        $extras_total = $row_extras['total'];*/
-
         ///for payment
         $payment_id = rand(000, 999);
 
-         ////for storing event details to event_details table
+         ////for storing event details to event_details table*/
         $event_id = rand(000, 999);
 
         

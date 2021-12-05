@@ -109,7 +109,7 @@
                                     <p class="desc"><?php echo $descritpion; ?></p>
                                     <p><?php echo $price; ?></p>
                                 </div>
-                                <input type="checkbox" name="menu[]" value="<?php echo $id?>">
+                                <input type="checkbox" name="menu[]" value="<?php echo $id; ?>">
                             </div>
                             <?php 
                                 }
@@ -148,7 +148,7 @@
                                     <p class="desc"><?php echo $descritpion; ?></p>
                                     <p><?php echo $price; ?></p>
                                 </div>
-                                <input type="checkbox" name="extra[]" value="<?php echo $id?>">
+                                <input type="checkbox" name="extra[]" value="<?php echo $id; ?>">
                             </div>
                             <?php 
                                 }
