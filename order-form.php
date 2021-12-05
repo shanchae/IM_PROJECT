@@ -14,7 +14,6 @@
         $menus = $_POST['menu'];
         $extras = $_POST['extra'];
         $booking_id = rand(000, 999);
-        $event_id = NULL;
         
         //no empty values to be inserted in database
         if($customer_name == ""){
@@ -39,7 +38,7 @@
         //loop through menus and extras selected
         //add a record to menu bookings/extras bookings
 
-        foreach ($menus as $menu){
+        /*foreach ($menus as $menu){
             $menu_booking_id = rand(000, 999);
 
             $sql = "INSERT INTO menus_bookings
@@ -92,7 +91,7 @@
         $res_extras = mysqli_query($conn, $sql_extras_total);
         //get result
         $row_extras = mysqli_fetch_assoc($res_extras);
-        $extras_total = $row_extras['total'];
+        $extras_total = $row_extras['total'];*/
 
         ///for payment
         $payment_id = rand(000, 999);
@@ -101,16 +100,15 @@
         $event_id = rand(000, 999);
 
         
-        $query = "
+        /*$query = "
         INSERT INTO payment_details
         SET id = $payment_id,
         extras_total = $extras_total,
         menus_total = $menu_total,
-        total = $extras_total + $menu_total,
-        minPayment = ($extras_total + $menu_total)/.50;";
+        total = extras_total + menus_total,
+        minPayment = (extras_total + menu_total)/.50;";*/
         
-        $query .= "
-            INSERT INTO event_details
+        $query = "INSERT INTO event_details
             SET id = $event_id,
             startTime = '$start',
             endTime = '$end',
@@ -118,22 +116,22 @@
             event_type = (
                 SELECT id 
                 FROM events
-                WHERE id = $event_type;";
+                WHERE id = $event_type);";
 
-        $query .= "
-            INSERT INTO bookings
-            SET id = '$booking_id',
+        $query .= "INSERT INTO bookings
+            SET id = $booking_id,
             customer_name = '$customer_name',
             customer_contact_no = '$customer_number',
             customer_email = '$customer_email',
             eventID = (
                 SELECT id
                 FROM event_details
-                WHERE id = '$event_id')";
+                WHERE id = $event_id)";
 
         $result = mysqli_multi_query($conn, $query);
         
-        $_SESSION['book'] = "<h2 class='success'>OPERATION SUCCESSFUL. PLEASE WAIT FOR CONFIRMATION TO YOUR CONTACT INFO</h2>";
+        
+        //$_SESSION['book'] = "<h2 class='success'>OPERATION SUCCESSFUL. PLEASE WAIT FOR CONFIRMATION TO YOUR CONTACT INFO</h2>";
         
     }
 
