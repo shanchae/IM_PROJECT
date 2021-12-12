@@ -1,88 +1,25 @@
 <?php
         include('partials-front/header.php');
+
+        $booking_id = rand(000, 999);
 ?>
     <!---main section--->
     <div style="background-color:#F7DAD9; height:100%; padding-top:1em; padding-bottom:1em;">
         <div class="form-container">
-            <form action="" method="POST" class="form-overlay">
+            <form action="<?php echo SITEURL; ?>booking.php?booking=<?php echo $booking_id; ?>" method="POST" class="form-overlay">
             <?php
-                if (isset($_SESSION['name'])){
-                    echo $_SESSION['name'];
-                    unset($_SESSION['name']);
-                }
-
-                if (isset($_SESSION['contacts'])){
-                    echo $_SESSION['contacts'];
-                    unset($_SESSION['contacts']);
-                }
-                if (isset($_SESSION['event'])){
-                    echo $_SESSION['event'];
-                    unset($_SESSION['event']);
-                }
                 if (isset($_SESSION['menu'])){
                     echo $_SESSION['menu'];
                     unset($_SESSION['menu']);
                 }
-                if (isset($_SESSION['book'])){
-                    echo $_SESSION['book'];
-                    unset($_SESSION['book']);
-                }
+
+                
             ?>
+                <input type="hidden" value="<?php echo $booking_id; ?>">
                 <h2> Order Form</h2>
-                <a class="button" href="<?php echo SITEURL; ?>payment.php">Proceed to payment</a>
-                <div class="input">
-                    <div>
-                        <label for="customer_name">Full Name</label>
-                    </div>
-                    <div>
-                        <input type="text" name="customer_name">
-                    </div>
-                    <div>
-                        <label for="customer_number">Contact Number</label>
-                    </div>
-                    <div>
-                        <input type="text" name="customer_number">
-                    </div>
-                    <div>
-                        <label for="customer_email">Email Address</label>
-                    </div>
-                    <div>
-                        <input type="email" name="customer_email">
-                    </div>
-                </div>
-                <div class="input">
-                    
-                    Event Details
-
-                    <select name="event" id="">
-                        <?php
-                            //to get data from database
-                            $sql = "SELECT * FROM events;";
-                            //execute the query
-                            $res = mysqli_query($conn, $sql);
-                            //count rows
-                            $count = mysqli_num_rows($res);
-
-                            if($count > 0){
-                                while($row = mysqli_fetch_assoc($res)){
-                                    $title = $row['title'];
-                                    $id = $row['id'];
-                        ?>
-                            <option value="<?php echo $id; ?>"><?php echo $title; ?></option>
-                            <?php 
-                                }
-                            } 
-                        ?>
-                    </select>
-                            
-                    <input type="datetime-local" name="event_start">
-                    <input type="datetime-local" name="event_end">
-                    <input type="text" name="event_address" placeholder="Address">                    
-                     
-                </div>
 
                 <!-----MENUS CHOICES------->
-                <h2>Menus</h2>
+                <h2>Choose Your Menu</h2>
                 <div class="input">
                 
                     <div class="grid-container">
@@ -167,9 +104,65 @@
         </div>
     </div>
 
-<?php 
+<?php
 
-    include('order-form.php');
+//to get data from form
+
+if(isset($_POST['submit'])){
+    //assign values
+    $menus = $_POST['menu'];
+    $extras = $_POST['extra'];
+    
+    //no empty values to be inserted in database
+
+    if(empty($_POST['menu']) || empty($_POST['extra'])){
+        $_SESSION['menu'] = "<p class='failed'>PLEASE PICK YOUR MENU OR EXTRAS</p>";
+
+        die();
+    }
+
+    //for menus and extras bookings
+    //loop through menus and extras selected
+    //add a record to menu bookings/extras bookings
+
+    /*foreach ($menus as $menu){
+        $menu_booking_id = rand(000, 999);
+
+        $sql = "INSERT INTO menus_bookings
+        SET id = $menu_booking_id,
+        bookingID = (
+            SELECT id
+            FROM bookings
+            WHERE id = $booking_id),
+        type = (
+            SELECT id
+            FROM menus_types
+            WHERE id = $menu;);";
+        
+        $res = mysqli_query($conn, $sql);
+    }*/
+
+    foreach ($extras as $extra){
+        $extras_booking_id = rand(000, 999);
+
+        $sql_ = "INSERT INTO extras_bookings
+        SET id = $extras_booking_id,
+        bookingID = (
+            SELECT id
+            FROM bookings
+            WHERE id = $booking_id),
+        type = (
+            SELECT id
+            FROM extrass_types
+            WHERE id = $extra);";
+
+        $res_ = mysqli_query($conn, $sql_);
+    }
+    
+    
+    //$_SESSION['book'] = "<h2 class='success'>OPERATION SUCCESSFUL. PLEASE WAIT FOR CONFIRMATION TO YOUR CONTACT INFO</h2>";
+    
+}
 
 ?>
 

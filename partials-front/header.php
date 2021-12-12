@@ -24,6 +24,7 @@
                 <li><a href="#menus">Menus</a></li>
                 <li><a href="#extras">Extras</a></li>
                 <li><a href="<?php echo SITEURL; ?>booking.php">Get Started</a></li>
+                <li><a href="<?php echo SITEURL; ?>payment.php">Payment</a></li>
                 <li><a href="<?php echo SITEURL; ?>admin/login.php">Admin Page</a></li>
             </ul>
         </div>

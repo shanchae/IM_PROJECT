@@ -12,6 +12,7 @@
         $end = mysqli_real_escape_string($conn, $_POST['event_end']);
         $address = mysqli_real_escape_string($conn, $_POST['event_address']);
         $menus = $_POST['menu'];
+        $menu_chk = "";
         $extras = $_POST['extra'];
         $booking_id = rand(000, 999);
         
@@ -53,7 +54,7 @@
                 WHERE id = $menu);";
             
             $res = mysqli_query($conn, $sql);
-        }
+        }*/
 
         foreach ($extras as $extra){
             $extras_booking_id = rand(000, 999);

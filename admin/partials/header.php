@@ -20,10 +20,11 @@
             </div>
             <ul>
                 <li><a href="<?php echo SITEURL; ?>">Home</a></li>
-                <li><a href="#">Events</a></li>
-                <li><a href="#">Menus</a></li>
-                <li><a href="#">Extras</a></li>
-                <li><a href="#">Get Started</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#menus">Menus</a></li>
+                <li><a href="#extras">Extras</a></li>
+                <li><a href="<?php echo SITEURL; ?>booking.php">Get Started</a></li>
+                <li><a href="<?php echo SITEURL; ?>payment.php">Payment</a></li>
                 <li><a href="<?php echo SITEURL; ?>admin/login.php">Admin Page</a></li>
             </ul>
         </div>
