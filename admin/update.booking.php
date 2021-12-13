@@ -67,6 +67,8 @@
                <button class="button" type="submit" name="submit">Submit</button>
                <br><br>
                <a href="<?php echo SITEURL; ?>admin/update.event-details.php?id=<?php echo $event; ?>&booking=<?php echo $id; ?>" class="btn-blue btn">Go to event details</a>
+               <br><br>
+               <a href="<?php echo SITEURL; ?>admin/manage.men-ex-details.php?booking=<?php echo $id; ?>" class="btn-blue btn">Go to order details</a>
            </form>
         </div>
     </div>
