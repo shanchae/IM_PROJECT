@@ -18,6 +18,7 @@
 
             <?php
                 //Get id to be edit
+                $id = $_GET['id'];
                 $booking = $_GET['booking'];
                 //SQL query to get data 
                
@@ -54,7 +55,7 @@
                                 <td><?php echo $menu_desc; ?></td>
                                 <td><?php echo $menu_price; ?></td>
                                 <td class="btn-st">
-                                    <div><a href="<?php echo SITEURL; ?>admin/delete.menu.book.php?id=<?php echo $menu_id; ?>&booking=<?php echo $booking; ?>" class="btn-red btn">Delete</a></div>
+                                    <div><a href="<?php echo SITEURL; ?>admin/delete.menu.book.php?menu_id=<?php echo $menu_id; ?>&booking=<?php echo $booking; ?>&id=<?php echo $id; ?>" class="btn-red btn">Delete</a></div>
                                 </td>
                             </tr>
 
@@ -86,7 +87,7 @@
                                 <td><?php echo $extras_desc; ?></td>
                                 <td><?php echo $extras_price; ?></td>
                                 <td class="btn-st">
-                                    <div><a href="<?php echo SITEURL; ?>admin/delete.extras.book.php?id=<?php echo $extras_id; ?>&booking=<?php echo $booking; ?>" class="btn-red btn">Delete</a></div>
+                                    <div><a href="<?php echo SITEURL; ?>admin/delete.extras.book.php?extra_id=<?php echo $extras_id; ?>&booking=<?php echo $booking; ?>&id=<?php echo $id; ?>" class="btn-red btn">Delete</a></div>
                                 </td>
                             </tr>
 

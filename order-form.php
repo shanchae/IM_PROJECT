@@ -130,6 +130,7 @@
         $stmt_menu->bind_param("i", $booking_id);
         $stmt_menu->execute();
         $result_menu = $stmt_menu->get_result();
+        $stmt_menu->close();
         $row_menu = $result_menu->fetch_assoc();
         $menu_total = $row_menu['menu total'];
 
@@ -142,6 +143,7 @@
         $stmt_extras->bind_param("i", $booking_id);
         $stmt_extras->execute();
         $result_extras = $stmt_extras->get_result();
+        $stmt_extras->close();
         $row_extras = $result_extras->fetch_assoc();
         $extras_total = $row_extras['extras total'];
 
@@ -160,6 +162,7 @@
         $stmt_pay = $conn->prepare($query_pay);
         $stmt_pay->bind_param("iiiii", $payment_id, $extras_total, $menu_total, $total, $min);
         $res = $stmt_pay->execute();
+        $stmt_pay->close();
 
         if(!$res){
             echo $conn->error;
@@ -177,13 +180,9 @@
         $stmt_bookings = $conn->prepare($query_booking);
         $stmt_bookings->bind_param("ii", $payment_id, $booking_id);
         $res_bookings = $stmt_bookings->execute();
+        $stmt_bookings->close();
 
-        if(!$res){
-            echo $conn->error;
-        } 
-        if(!$res_bookings){
-            echo $conn->error;
-        } 
+        $_SESSION['done'] = "<h2 class='success'>BOOKED SUCCESSFULLY</h2>";
     }
 
 ?>

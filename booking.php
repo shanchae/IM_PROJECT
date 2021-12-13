@@ -27,6 +27,10 @@
                     echo $_SESSION['book'];
                     unset($_SESSION['book']);
                 }
+                if (isset($_SESSION['done'])){
+                    echo $_SESSION['done'];
+                    unset($_SESSION['done']);
+                }
             ?>
                 <h2> Order Form</h2>
                 <a class="button" href="<?php echo SITEURL; ?>payment.php">Proceed to payment</a>
