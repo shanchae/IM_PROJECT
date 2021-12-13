@@ -1,3 +1,5 @@
+CREATE DATABASE 'cutnfold';
+
 CREATE TABLE admin (
     id INT NOT NULL AUTO_INCREMENT,
     fName VARCHAR(100) NOT NULL,
@@ -30,12 +32,6 @@ CREATE TABLE extras_types (
     price DECIMAL(11, 2) NOT NULL,
     image VARCHAR(255) NOT NULL,
     CONSTRAINT pk_extras_types PRIMARY KEY(id)
-);
-
-CREATE TABLE payment_method (
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    CONSTRAINT pk_payment PRIMARY KEY(id)
 ); 
 
 CREATE TABLE payment_details (
@@ -47,42 +43,38 @@ CREATE TABLE payment_details (
     paid DECIMAL(11, 2) NOT NULL,
     balance DECIMAL(11, 2) NOT NULL,
     pay_method INT NOT NULL,
-    CONSTRAINT pk_payment_details PRIMARY KEY(id);
-    CONSTRAINT fk_pay_method FOREIGN KEY(pay_method)
-    REFERENCES payment_method(id)
+    CONSTRAINT pk_payment_details PRIMARY KEY(id)
 );
 
 CREATE TABLE bookings (
-    id INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL
     eventID INT,
-    eventDate DATE,
-    status enum('confirmed', 'cancelled'),
+    customer_name VARCHAR(200) NOT NULL,
+    customer_contact_no VARCHAR(11) NOT NULL,
+    customer_email VARCHAR(200) NOT NULL,
+    status enum('Confirmed', 'Cancelled'),
     receiptID INT,
     CONSTRAINT pk_bookings PRIMARY KEY(id),
     CONSTRAINT pk_event_bookings FOREIGN KEY(eventID)
         REFERENCES events(id),
     CONSTRAINT pk_pay_bookings FOREIGN KEY(receiptID)
-        REFERENCES payment_details(id),
-)
+        REFERENCES payment_details(id)
+);
 
 CREATE TABLE menus_bookings (
-    id INT NOT NULL AUTO_INCREMENT,
     type INT NOT NULL,
     bookingID INT NOT NULL,
-    quantity INT NOT NULL,
-    total DECIMAL(11, 2) NOT NULL,
-    CONSTRAINT pk_menus_bookings PRIMARY KEY(id),
     CONSTRAINT fk_book_menu FOREIGN KEY(bookingID)
-    REFERENCES booking(id);
+    REFERENCES booking(id),
+    CONSTRAINT fk_type_menu FOREIGN KEY(type)
+    REFERENCES menus_types(id)
 );
 
 CREATE TABLE extras_bookings (
-    id INT NOT NULL AUTO_INCREMENT,
     type INT NOT NULL,
     bookingID INT NOT NULL,
-    quantity INT NOT NULL,
-    total DECIMAL(11, 2) NOT NULL,
-    CONSTRAINT pk_extras_bookings PRIMARY KEY(id),
     CONSTRAINT fk_book_extras FOREIGN KEY(bookingID)
-    REFERENCES bookings(id);
+    REFERENCES bookings(id),
+    CONSTRAINT fk_type_extras FOREIGN KEY(type)
+    REFERENCES extras_types(id)
 );
