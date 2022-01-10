@@ -59,7 +59,7 @@
 
         if ($count == 1){
 
-            $_SESSION['username'] = $username;
+            $_SESSION['user'] = $username;
 
             header("location:".SITEURL."admin/admin.php");
         } else {

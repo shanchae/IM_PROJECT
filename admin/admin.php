@@ -1,6 +1,6 @@
 <?php
     include('partials/admin-header.php');
-
+    include('login.check.php');
 ?>
 
     <div class="main" style="height:64vh;">

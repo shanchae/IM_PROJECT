@@ -15,6 +15,11 @@
                     unset($_SESSION['update']);
                 }
 
+                if (isset($_SESSION['delete'])){
+                    echo $_SESSION['delete'];
+                    unset($_SESSION['delete']);
+                }
+
                 if (isset($_SESSION['update-event'])){
                     echo $_SESSION['update-event'];
                     unset($_SESSION['update-event']);
@@ -68,7 +73,7 @@
                                     
                                     <td class="btn-st">
                                         <a href="<?php echo SITEURL; ?>admin/update.booking.php?id=<?php echo $id; ?>" class="btn-green btn">Update</a>
-                                       
+                                        <a href="<?php echo SITEURL; ?>admin/delete.booking.php?id=<?php echo $id; ?>" class="btn-red btn">Delete</a>
                                     </td>
                                 </tr>
 

@@ -14,6 +14,8 @@
         $menus = $_POST['menu'];
         $extras = $_POST['extra'];
         $booking_id = rand(000, 999);
+        $event_id = rand(000, 999);
+        $payment_id = rand(000, 999);
         
         //no empty values to be inserted in database
         if($customer_name == ""){
@@ -28,17 +30,14 @@
             die();
         }
 
-        if(empty($_POST['menu']) || empty($_POST['extra'])){
+        if(empty($menus) || empty($extras)){
             $_SESSION['menu'] = "<p class='failed'>PLEASE PICK YOUR MENU OR EXTRAS</p>";
 
             die();
         }
 
 
-         ////for storing event details to event_details table*/
-        $event_id = rand(000, 999);
-
-        
+         ////for storing event details to event_details table
         $query = "INSERT INTO event_details
             SET id = ?,
             startTime = ?,
@@ -51,9 +50,13 @@
 
         $stmt = $conn->prepare($query);
         $stmt->bind_param("isssi", $event_id, $start, $end, $address, $event_type);
-        $stmt->execute();
-        $stmt->close();
+        $res_event = $stmt->execute();
 
+        if (!$res_event){
+            echo $conn->error;
+        }
+
+        //create booking record
         $query_2 = "INSERT INTO bookings
             SET id = ?,
             customer_name = ?,
@@ -66,9 +69,13 @@
 
         $stmt_2 = $conn->prepare($query_2);
         $stmt_2->bind_param("isssi", $booking_id, $customer_name, $customer_number, $customer_email, $event_id);
-        $stmt_2->execute();
-        $stmt_2->close();    
-
+        $res_book = $stmt_2->execute();
+        
+        if (!$res_book){
+            echo $conn->error;
+        }
+        
+        //create menu record
         $menu_query = "INSERT INTO menus_bookings
             SET
             bookingID = (
@@ -84,16 +91,14 @@
         $menu_stmt->bind_param("ii", $booking_id, $menu);
 
         foreach ($menus as $menu){
-           $res = $menu_stmt->execute();
+           $res_menu = $menu_stmt->execute();
         }
 
-        if(!$res){
+        if(!$res_menu){
             echo $conn->error;
         }
 
-        $menu_stmt->close();
-
-
+        ///create extras record
         $extras_query = "INSERT INTO extras_bookings
             SET
             bookingID = (
@@ -109,18 +114,15 @@
         $extras_stmt->bind_param("ii", $booking_id, $extra);
 
         foreach ($extras as $extra){
-            $res2 = $extras_stmt->execute();
+            $res_extras = $extras_stmt->execute();
         }
 
     
-         if(!$res2){
+         if(!$res_extras){
              echo $conn->error;
          }
 
-        $extras_stmt->close();
-
-        $payment_id = rand(000, 999);
-
+        //calculate fees
         $menu_sql = "SELECT SUM(mt.price) as 'menu total'
         FROM menus_types mt, menus_bookings mb
         WHERE mt.id = mb.type
@@ -130,7 +132,6 @@
         $stmt_menu->bind_param("i", $booking_id);
         $stmt_menu->execute();
         $result_menu = $stmt_menu->get_result();
-        $stmt_menu->close();
         $row_menu = $result_menu->fetch_assoc();
         $menu_total = $row_menu['menu total'];
 
@@ -143,13 +144,13 @@
         $stmt_extras->bind_param("i", $booking_id);
         $stmt_extras->execute();
         $result_extras = $stmt_extras->get_result();
-        $stmt_extras->close();
         $row_extras = $result_extras->fetch_assoc();
         $extras_total = $row_extras['extras total'];
 
         $total = $menu_total + $extras_total;
         $min = $total * .50;
 
+        //create payment details
         $query_pay = "INSERT INTO payment_details
             SET id = ?,
             extras_total = ?,
@@ -158,16 +159,15 @@
             minPayment = ?;
           ";
 
-
         $stmt_pay = $conn->prepare($query_pay);
         $stmt_pay->bind_param("iiiii", $payment_id, $extras_total, $menu_total, $total, $min);
-        $res = $stmt_pay->execute();
-        $stmt_pay->close();
+        $res_pay = $stmt_pay->execute();
 
-        if(!$res){
+        if(!$res_pay){
             echo $conn->error;
         } 
 
+        //add receipt to booking record
         $query_booking = "UPDATE bookings
             SET receiptID = (
                 SELECT id 
@@ -176,13 +176,16 @@
             WHERE id = ?;
           ";
 
-
         $stmt_bookings = $conn->prepare($query_booking);
         $stmt_bookings->bind_param("ii", $payment_id, $booking_id);
         $res_bookings = $stmt_bookings->execute();
-        $stmt_bookings->close();
 
-        $_SESSION['done'] = "<h2 class='success'>BOOKED SUCCESSFULLY</h2>";
+        if ($res_bookings){
+            
+            $_SESSION['done'] = "<h2 class='success'>BOOKED SUCCESSFULLY</h2>";
+            
+        } else {
+            $_SESSION['done'] = "<h2 class='failed'>BOOKING FAILED</h2>";
+        }
     }
-
 ?>
