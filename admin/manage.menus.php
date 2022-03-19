@@ -73,8 +73,8 @@
                                     <td><?php echo $price; ?></td>
                                     <td><img src="<?php echo SITEURL; ?>images/menus/<?php echo $image; ?>" alt="" width="100px"></td>
                                     <td class="btn-st">
-                                        <div><a href="<?php echo SITEURL; ?>admin/update.extras.php?id=<?php echo $id; ?>&image=<?php echo $image; ?>" class="btn-green btn">Update</a></div>
-                                        <div><a href="<?php echo SITEURL; ?>admin/delete.extras.php?id=<?php echo $id; ?>&image=<?php echo $image; ?>" class="btn-red btn">Delete</a></div>
+                                        <div><a href="<?php echo SITEURL; ?>admin/update.menus.php?id=<?php echo $id; ?>&image=<?php echo $image; ?>" class="btn-green btn">Update</a></div>
+                                        <div><a href="<?php echo SITEURL; ?>admin/delete.menus.php?id=<?php echo $id; ?>&image=<?php echo $image; ?>" class="btn-red btn">Delete</a></div>
                                         
                                     </td>
                                 </tr>

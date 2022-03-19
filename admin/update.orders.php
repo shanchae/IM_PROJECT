@@ -98,47 +98,6 @@
         </div>
     </div>
 
-            
-
-<?php
-
-    if (isset($_POST['submit'])){
-        $id = $_POST['id'];
-        $event = $_POST['event'];
-        $eventAddress = $_POST['address'];
-
-        if ($_POST['start']){
-            $start = $_POST['start'];
-        }
-
-        if ($_POST['end']){
-            $end = $_POST['end'];
-        }
-
-        //SQL query to to update admin
-        $sql = "UPDATE event_details
-            SET 
-            event_type = '$event',
-            startTime = '$start',
-            endTime = '$end',
-            eventAddress = '$eventAddress'
-            WHERE id = $id;";
-
-        //to execute the query
-
-        $res = mysqli_query($conn, $sql);
-
-        if ($res == TRUE){
-            $_SESSION['update-event'] = "<h2 class='success'>UPDATE ORDER SUCCESSFUL</h2>";
-            header("location:".SITEURL."admin/manage.bookings.php");
-        } else {
-            $_SESSION['update-event'] = "<h2 class='failed'>UPDATE ORDER FAILED</h2>";
-            header("location:".SITEURL."admin/manage.bookings.php");
-        }
-    }
-    
-?>
-
 <?php
     include('partials/footer.php');
 ?>

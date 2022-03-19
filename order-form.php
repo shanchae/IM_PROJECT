@@ -182,10 +182,10 @@
 
         if ($res_bookings){
             
-            $_SESSION['done'] = "<h2 class='success'>BOOKED SUCCESSFULLY</h2>";
+            echo "<h2 class='success'>BOOKED SUCCESSFULLY</h2>";
             
         } else {
-            $_SESSION['done'] = "<h2 class='failed'>BOOKING FAILED</h2>";
+            echo "<h2 class='failed'>BOOKING FAILED</h2>";
         }
     }
 ?>

@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div>
-                <p>2021 All rights reserved, Cut 'n Fold</p>
+                <p>2021 All Rights Reserved, Cut 'n Fold</p>
             </div>
         </div>
         

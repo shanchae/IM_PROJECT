@@ -5,7 +5,7 @@
     <div class="main" style="height:100vh;">
 
         <div class="container">
-            <h1>UPDATE MENUS</h1>
+            <h1>UPDATE EXTRAS</h1>
 
             <?php
                 //Get id to be edit

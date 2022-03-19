@@ -12,32 +12,57 @@
                 $id = $_GET['id'];
                 $booking = $_GET['booking'];
                 //SQL query to get data
-                $sql = "SELECT * FROM event_details WHERE id = $id;";
+                $sql = "SELECT * FROM event_details WHERE id = ?;";
 
-                //To execute the query
-                $res = mysqli_query($conn, $sql);
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+                $res = $stmt->get_result();
+                $row = $res->fetch_assoc();
+                
+                $id = $row['id'];
+                $event = $row['event_type'];
+                $start = $row['startTime'];
+                $end = $row['endTime'];
+                $eventAddress = $row['eventAddress'];
 
-                if ($res == TRUE){
-                    $count = mysqli_num_rows($res);
+                $sql_2 = "SELECT * FROM events WHERE id = ?;";
 
-                    if($count == 1){
-                        $row = mysqli_fetch_assoc($res);
-                        $id = $row['id'];
-                        $event = $row['event_type'];
-                        $start = $row['startTime'];
-                        $end = $row['endTime'];
-                        $eventAddress = $row['eventAddress'];
-
-                    } else {
-                        header('location:'.SITEURL.'admin/update.booking.php');
-                    }
-                }
+                $stmt_2 = $conn->prepare($sql_2);
+                $stmt_2->bind_param("i", $event);
+                $stmt_2->execute();
+                $res_2 = $stmt_2->get_result();
+                $row_2 = $res_2->fetch_assoc();
+                $event_id = $row_2['id'];
+                $event_title = $row_2['title'];
             ?>
 
             <form action="" method="POST" class="form">
                <div>
                     <label for="event">Event Type:</label>
-                    <input type="text" name="event" value="<?php echo $id; ?>">  
+                    <p><?php echo $event_title; ?></p>
+                    <p>Change to:</p>
+                    <select name="event">
+                        <option default value="<?php echo $event_id; ?>"></option>
+                        <?php
+                            //to get data from database
+                            $sql = "SELECT * FROM events;";
+                            //execute the query
+                            $res = mysqli_query($conn, $sql);
+                            //count rows
+                            $count = mysqli_num_rows($res);
+
+                            if($count > 0){
+                                while($row = mysqli_fetch_assoc($res)){
+                                    $title = $row['title'];
+                                    $e_id = $row['id'];
+                        ?>
+                            <option value="<?php echo $e_id; ?>"><?php echo $title; ?></option>
+                            <?php 
+                                }
+                            } 
+                        ?>
+                    </select>  
                </div>
                <div>
                     <label for="start">Time Start:</label>
