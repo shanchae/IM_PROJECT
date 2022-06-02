@@ -3,7 +3,8 @@
 ?>
 <div class="main" style="height:100vh;">
         <div class="container">
-            <h2>MANAGE ORDER DETAILS</h2>
+            <h2>MANAGE PAYMENT DETAILS</h2>
+            
 
             <?php
 
@@ -20,20 +21,24 @@
             ?>
 
             <table class="tbl-full" style="height:auto;">
+            <?php
+                    //TO GET DATA
+                    $booking = $_GET['booking']; ?>
+
+            <a href="<?php echo SITEURL; ?>admin/update.booking.php?id=<?php echo $booking; ?>" class="btn-blue btn">Back to booking details</a>
                 <tr>
-                    <th>ID</th>
+                    
                     <th>Total</th>
                     <th>Menu Total</th>
                     <th>Extras Total</th>
                     <th>Minimum Payment</th>
                     <th>Paid</th>
                     <th>Balance</th>
+                    <th>Status</th>
                    
                 </tr>
-
-                <?php
-                    //TO GET DATA
-                    $booking = $_GET['id'];
+                    <?php
+                
                     $sql = "SELECT * FROM payment_details
                     WHERE id = (
                         SELECT receiptID
@@ -55,21 +60,23 @@
                                 $min = $rows['minPayment'];
                                 $paid = $rows['paid'];
                                 $balance = $rows['balance'];
+                                $status = $rows['status'];
                                 $total = $rows['total'];
 
                                 ?>
 
                                 <tr>
-                                    <td><?php echo $id; ?></td>
+                                    
                                     <td><?php echo $total; ?></td>
                                     <td><?php echo $menu; ?></td>
                                     <td><?php echo $extras; ?></td>
                                     <td><?php echo $min; ?></td>
                                     <td><?php echo $paid; ?></td>
                                     <td><?php echo $balance; ?></td>
+                                    <td><?php echo $status; ?></td>
                                     
                                     <td class="btn-st">
-                                        <a href="<?php echo SITEURL; ?>admin/update.orders.php?id=<?php echo $id; ?>&booking=<?php echo $booking; ?>" class="btn-green btn">Update</a>
+                                        <a href="<?php echo SITEURL; ?>admin/update.payment.php?id=<?php echo $booking; ?>" class="btn-green btn">Update</a>
                                        
                                     </td>
                                 </tr>

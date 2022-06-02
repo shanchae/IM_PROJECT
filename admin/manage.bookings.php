@@ -4,7 +4,7 @@
 ?>
 
     <!---main section--->
-    <div class="main" style="height:100vh;">
+    <div class="main" style="min-height:100vh;">
         <div class="container">
             <h2>MANAGE BOOKINGS</h2>
 
@@ -27,7 +27,8 @@
 
             ?>
 
-            <table class="tbl-full" style="height:auto;">
+            <table class="tbl-full" style="height:auto; table-layout: auto;
+    width: 100%;">
                 <tr>
                     <th>ID</th>
                     <th>Event ID</th>
@@ -35,7 +36,9 @@
                     <th>Customer Contact Number</th>
                     <th>Customer Email</th>
                     <th>Status</th>
-                    <th>Receipt ID</th>
+                    
+                    <th>Event Status</th>
+                    <th>Transaction Status</th>
                    
                 </tr>
 
@@ -59,6 +62,8 @@
                                 $customer_email = $rows['customer_email'];
                                 $receipt = $rows['receiptID'];
                                 $status = $rows['status'];
+                                $transaction = $rows['transaction_status'];
+                                $event_status = $rows['event_status'];
 
                                 ?>
 
@@ -69,7 +74,9 @@
                                     <td><?php echo $customer_contact_no; ?></td>
                                     <td><?php echo $customer_email; ?></td>
                                     <td><?php echo $status; ?></td>
-                                    <td><?php echo $receipt; ?></td>
+                                    
+                                    <td><?php echo $event_status; ?></td>
+                                    <td><?php echo $transaction; ?></td>
                                     
                                     <td class="btn-st">
                                         <a href="<?php echo SITEURL; ?>admin/update.booking.php?id=<?php echo $id; ?>" class="btn-green btn">Update</a>

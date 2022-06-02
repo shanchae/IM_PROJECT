@@ -156,11 +156,12 @@
             extras_total = ?,
             menus_total = ?,
             total = ?,
+            balance = ?,
             minPayment = ?;
           ";
 
         $stmt_pay = $conn->prepare($query_pay);
-        $stmt_pay->bind_param("iiiii", $payment_id, $extras_total, $menu_total, $total, $min);
+        $stmt_pay->bind_param("iiiiii", $payment_id, $extras_total, $menu_total, $total, $total, $min);
         $res_pay = $stmt_pay->execute();
 
         if(!$res_pay){
@@ -182,7 +183,9 @@
 
         if ($res_bookings){
             
-            echo "<h2 class='success'>BOOKED SUCCESSFULLY</h2>";
+           echo "<h2 class='success'>BOOKED SUCCESSFULLY. Your Code: $booking_id</h2>
+           
+           ";
             
         } else {
             echo "<h2 class='failed'>BOOKING FAILED</h2>";

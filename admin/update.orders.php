@@ -18,7 +18,6 @@
 
             <?php
                 //Get id to be edit
-                $id = $_GET['id'];
                 $booking = $_GET['booking'];
                 //SQL query to get data 
                

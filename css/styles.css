@@ -176,8 +176,8 @@ footer {
 /* for manage page styling */
 
 .container {
-    padding: 1%;
-    width: 85%;
+    padding: 1em;
+    width: 90%;
     margin: 0 auto;
     height: 100%;
 }
@@ -190,26 +190,21 @@ footer {
 /* tables styling */
 
 .tbl-full{
-    width: 80%;
+    width: 100%;
     margin-top: 20px;
     height: 100%;
 }
 
-table{
+table {
     background-color: rgba(252, 252, 252, 0.815);
-    padding: 1em;
-    border-radius: .8em;
+    border-radius: 1em;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    
 }
 
 table tr th{
     border-bottom: 1px solid black;
-    padding: 1%;
-    text-align: left;
-}
-
-table tr td {
-    padding: 1%;
+    
 }
 
 .tbl-full .button {
@@ -218,7 +213,6 @@ table tr td {
     align-items: center;
     justify-content: center;
 }
-
 
 
 .btn-st {
@@ -377,4 +371,5 @@ table tr td {
     padding-top:1em;
     padding-bottom:1em;
 }
+
 

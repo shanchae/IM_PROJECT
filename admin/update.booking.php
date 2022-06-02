@@ -62,13 +62,29 @@
                         <option value="Cancelled">Cancelled</option>
                     </select>
                </div>
+               <div>
+                    <label for="event_status">Event Status:</label>
+                    <select name="event_status">
+                        <option value="To Be Held">To Be Held</option>
+                        <option value="Finished">Finished</option>
+                    </select>
+               </div>
+               <div>
+                    <label for="transaction">Transaction Status:</label>
+                    <select name="transaction">
+                        <option value="Processing">Processing</option>
+                        <option value="Successful">Successful</option>
+                        <option value="Failed">Failed</option>
+                    </select>
+               </div>
                
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                <button class="button" type="submit" name="submit">Submit</button>
                <br><br>
                <a href="<?php echo SITEURL; ?>admin/update.event-details.php?id=<?php echo $event; ?>&booking=<?php echo $id; ?>" class="btn-blue btn">Go to event details</a>
                <br><br>
-               <a href="<?php echo SITEURL; ?>admin/manage.men-ex-details.php?booking=<?php echo $id; ?>" class="btn-blue btn">Go to order details</a>
+               <a href="<?php echo SITEURL; ?>admin/update.orders.php?booking=<?php echo $id; ?>" class="btn-blue btn">Go to order details</a>
+               <a href="<?php echo SITEURL; ?>admin/manage.men-pay-details.php?booking=<?php echo $id; ?>" class="btn-blue btn">Go to payment details</a>
            </form>
         </div>
     </div>
@@ -82,6 +98,8 @@
         $customer_contact_no = $_POST['number'];
         $customer_email = $_POST['email'];
         $status = $_POST['status'];
+        $transaction = $_POST['transaction'];
+        $event_status = $_POST['event_status'];
 
 
         //SQL query to to update admin
@@ -89,7 +107,9 @@
             SET customer_name = '$customer_name',
             customer_contact_no = '$customer_contact_no',
             customer_email = '$customer_email',
-            status = '$status'
+            status = '$status',
+            event_status = '$event_status',
+            transaction_status = '$transaction'
             WHERE id = '$id;'";
 
         //to execute the query

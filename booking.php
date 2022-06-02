@@ -3,6 +3,15 @@
 ?>
     <!---main section--->
     <div style="background-color:#F7DAD9; height:100%; padding-top:1em; padding-bottom:1em;">
+    <br>
+        <center>
+
+        <?php 
+
+    include('order-form.php');
+
+?>
+</center>
         <div class="form-container">
             <form action="" method="POST" class="form-overlay">
             <?php
@@ -29,7 +38,6 @@
                 }
             ?>
                 <h2> Order Form</h2>
-                <a class="button" href="<?php echo SITEURL; ?>payment.php">Proceed to payment</a>
                 <div class="input">
                     <div>
                         <label for="customer_name">Full Name</label>
@@ -165,18 +173,7 @@
                 </center>
                 
             </form>
-
-            
         </div>
-        <br>
-        <center>
-
-        <?php 
-
-    include('order-form.php');
-
-?>
-</center>
     </div>
 
 <?php
