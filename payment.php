@@ -18,7 +18,78 @@
                 if(isset($_POST['submit'])){
                     $booking = mysqli_real_escape_string($conn, $_POST['booking']);
 
-                    if($booking){?>
+                    if($booking){
+                    
+                        $order = "SELECT * FROM bookings WHERE id = ?;";
+                        $stmt_order = $conn->prepare($order);
+                        $stmt_order->bind_param("i", $booking);
+                        $stmt_order->execute();
+                        $res_order = $stmt_order->get_result();
+        
+                        while($rows_order = $res_order->fetch_assoc()){
+                            $event = $rows_order['eventID'];
+                            $customer_name = $rows_order['customer_name'];
+                            $customer_contact_no = $rows_order['customer_contact_no'];
+                            $customer_email = $rows_order['customer_email'];  
+                    ?>
+                    <br>
+                        <div>
+                                <h4>Customer Name:</h4>
+                                <p><?php echo $customer_name; ?></p> 
+                        </div>
+                        <div>
+                                <h4>Customer Number:</h4>
+                                <p><?php echo $customer_contact_no; ?></p> 
+                        </div>
+                        <div>
+                                <h4>Customer Email:</h4>
+                                <p><?php echo $customer_email; ?></p>
+                        </div>
+                        <?php
+                            $event_query = "SELECT * FROM event_details WHERE id = ?;";
+
+                            $event_stmt = $conn->prepare($event_query);
+                            $event_stmt->bind_param("i", $event);
+                            $event_stmt->execute();
+                            $res_event = $event_stmt->get_result();
+                            $row_event = $res_event->fetch_assoc();
+                            
+                            $id = $row_event['id'];
+                            $event_get = $row_event['event_type'];
+                            $start = $row_event['startTime'];
+                            $end = $row_event['endTime'];
+                            $eventAddress = $row_event['eventAddress'];
+            
+                            $sql_2 = "SELECT * FROM events WHERE id = ?;";
+            
+                            $stmt_2 = $conn->prepare($sql_2);
+                            $stmt_2->bind_param("i", $event_get);
+                            $stmt_2->execute();
+                            $res_2 = $stmt_2->get_result();
+                            $row_2 = $res_2->fetch_assoc();
+                            $event_id = $row_2['id'];
+                            $event_title = $row_2['title'];
+                    ?>
+                    <br>
+                    <div>
+                            <h4>Event Type:</h4>
+                            <p><?php echo $event_title; ?></p>
+                    </div>
+                    <div>
+                            <h4>Time Start:</h4>
+                            <p><?php echo $start; ?></p>
+                             
+                    </div>
+                    <div>
+                            <h4>Time End:</h4>
+                            <p><?php echo $end; ?></p>
+                             
+                    </div>
+                    <div>
+                            <h4>Address:</h4>
+                            <p><?php echo $eventAddress; ?></p> 
+                    </div>
+
                     <table class="tbl-full" style="height:auto;">
                     <br>
                         <h3>Menu/Extras</h3>
@@ -177,6 +248,7 @@
                                     <?php
                                 }
                     }
+                }
                 }
 
                             ?>
