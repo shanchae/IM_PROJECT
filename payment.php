@@ -19,9 +19,77 @@
                     $booking = mysqli_real_escape_string($conn, $_POST['booking']);
 
                     if($booking){?>
+                    <table class="tbl-full" style="height:auto;">
+                    <br>
+                        <h3>Menu/Extras</h3>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                            </tr>
+                            <?php
+                                //TO GET DATA
+                                $query_menu = "SELECT mt.id, mt.title, mt.description, mt.price FROM menus_types mt, menus_bookings mb
+                                WHERE mt.id = mb.type
+                                AND mb.bookingID = ?;";  
+                                
+                                $stmt_menu = $conn->prepare($query_menu);
+                                $stmt_menu->bind_param("i", $booking);
+                                $stmt_menu->execute();
+                                $res_menu = $stmt_menu->get_result();
+                            
+                                        //Loop through data
+                                    while($rows_menu = $res_menu->fetch_assoc()){
+                                        $menu_id = $rows_menu['id'];
+                                        $menu_title = $rows_menu['title'];
+                                        $menu_desc = $rows_menu['description'];
+                                        $menu_price = $rows_menu['price'];
+                                        ?>
+
+                                        <tr>
+                                            <td><?php echo $menu_title; ?></td>
+                                            <td><?php echo $menu_desc; ?></td>
+                                            <td><?php echo $menu_price; ?></td>
+                                            
+                                        </tr>
+
+                                        <?php
+                                        }
+                            ?>
+                            <?php
+                                //TO GET DATA
+                                $query_extras = "SELECT et.id, et.title, et.description, et.price FROM extras_types et, extras_bookings eb
+                                WHERE et.id = eb.type
+                                AND eb.bookingID = ?;";   
+                                
+                                $stmt_extras = $conn->prepare($query_extras);
+                                $stmt_extras->bind_param("i", $booking);
+                                $stmt_extras->execute();
+                                $res_menu = $stmt_menu->get_result();
+                                $res_extras = $stmt_extras->get_result();
+                            
+                                        //Loop through data
+                                    while($row_extras = $res_extras->fetch_assoc()){
+                                        $extras_id = $row_extras['id'];
+                                        $extras_title = $row_extras['title'];
+                                        $extras_desc = $row_extras['description'];
+                                        $extras_price = $row_extras['price'];
+                                        ?>
+
+                                        <tr>
+                                            <td><?php echo $extras_title; ?></td>
+                                            <td><?php echo $extras_desc; ?></td>
+                                            <td><?php echo $extras_price; ?></td>
+                                           
+                                        </tr>
+
+                                        <?php
+                                        }
+                            ?>
+                        </table>
                         <table class="tbl-full" style="height:auto;">
                             <tr>
-                                <th>ID</th>
+                                
                                 <th>Total</th>
                                 <th>Menu Total</th>
                                 <th>Extras Total</th>
@@ -61,7 +129,7 @@
                                             ?>
 
                                             <tr>
-                                                <td><?php echo $id; ?></td>
+                                                
                                                 <td><?php echo $total; ?></td>
                                                 <td><?php echo $menu; ?></td>
                                                 <td><?php echo $extras; ?></td>
