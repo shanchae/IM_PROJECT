@@ -20,6 +20,7 @@
             ?>
 
             <table class="tbl-full" style="height:auto;">
+            
                 <tr>
                     <th>ID</th>
                     <th>Total</th>

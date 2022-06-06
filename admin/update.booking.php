@@ -6,7 +6,8 @@
 
         <div class="container">
             <h1>UPDATE BOOKINGS</h1>
-
+            <a href="<?php echo SITEURL; ?>admin/manage.bookings.php" class="btn-blue btn">Back to bookings</a>
+            <br><br>
             <?php
                 //Get id to be edit
                 $id = $_GET['id'];
@@ -84,6 +85,7 @@
                <a href="<?php echo SITEURL; ?>admin/update.event-details.php?id=<?php echo $event; ?>&booking=<?php echo $id; ?>" class="btn-blue btn">Go to event details</a>
                <br><br>
                <a href="<?php echo SITEURL; ?>admin/update.orders.php?booking=<?php echo $id; ?>" class="btn-blue btn">Go to order details</a>
+               <br><br>
                <a href="<?php echo SITEURL; ?>admin/manage.men-pay-details.php?booking=<?php echo $id; ?>" class="btn-blue btn">Go to payment details</a>
            </form>
         </div>

@@ -185,7 +185,7 @@
             
            echo "<h2 class='success'>BOOKED SUCCESSFULLY. Your Code: $booking_id.</h2>";
 
-           echo "<a class='success' href='payment.php'>Check your order.</a>" ;
+           echo "<a class='btn btn-blue' href='payment.php'>Check your order.</a>" ;
             
         } else {
             echo "<h2 class='failed'>BOOKING FAILED</h2>";

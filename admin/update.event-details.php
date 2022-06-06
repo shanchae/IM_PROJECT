@@ -36,7 +36,8 @@
                 $event_id = $row_2['id'];
                 $event_title = $row_2['title'];
             ?>
-
+            <a href="<?php echo SITEURL; ?>admin/update.booking.php?id=<?php echo $booking; ?>" class="btn-blue btn">Back to booking details</a>
+            <br><br>
             <form action="" method="POST" class="form">
                <div>
                     <label for="event">Event Type:</label>

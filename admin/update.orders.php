@@ -24,6 +24,8 @@
             ?>
 
             <table class="tbl-full" style="height:auto;">
+            <a href="<?php echo SITEURL; ?>admin/update.booking.php?id=<?php echo $booking; ?>" class="btn-blue btn">Back to booking details</a>
+            <br><br>
             <h2>Menu/Extras</h2>
                 <tr>
                     <th>Title</th>
