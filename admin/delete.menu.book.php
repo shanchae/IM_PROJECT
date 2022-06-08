@@ -53,12 +53,13 @@
             extras_total = ?,
             menus_total = ?,
             total = ?,
+            balance = ?,
             minPayment = ?
           WHERE id = ?;";
 
 
     $stmt_pay = $conn->prepare($sql_pay);
-    $stmt_pay->bind_param("iiiii", $extras_total, $menu_total, $total, $min, $payment_id);
+    $stmt_pay->bind_param("iiiiii", $extras_total, $menu_total, $total, $total, $min, $payment_id);
     $res = $stmt_pay->execute();
 
     if ($res == TRUE){
