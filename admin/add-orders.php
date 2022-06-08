@@ -1,95 +1,26 @@
 <?php
-        include('partials-front/header.php');
+    include('partials/admin-header.php');
 ?>
-    <!---main section--->
-    <div style="background-color:#F7DAD9; height:100%; padding-top:1em; padding-bottom:1em;">
+
+<div style="background-color:#F7DAD9; height:100%; padding-top:1em; padding-bottom:1em;">
     <br>
-        <center>
-
-        <?php 
-
-    include('order-form.php');
-
-?>
-</center>
         <div class="form-container">
             <form action="" method="POST" class="form-overlay">
-            <?php
-                if (isset($_SESSION['name'])){
-                    echo $_SESSION['name'];
-                    unset($_SESSION['name']);
-                }
 
-                if (isset($_SESSION['contacts'])){
-                    echo $_SESSION['contacts'];
-                    unset($_SESSION['contacts']);
-                }
-                if (isset($_SESSION['event'])){
-                    echo $_SESSION['event'];
-                    unset($_SESSION['event']);
-                }
-                if (isset($_SESSION['menu'])){
-                    echo $_SESSION['menu'];
-                    unset($_SESSION['menu']);
-                }
-                if (isset($_SESSION['book'])){
-                    echo $_SESSION['book'];
-                    unset($_SESSION['book']);
-                }
-            ?>
-                <h2> Order Form</h2>
-                <div class="input">
-                    <div>
-                        <label for="customer_name">Full Name</label>
-                    </div>
-                    <div>
-                        <input type="text" name="customer_name">
-                    </div>
-                    <div>
-                        <label for="customer_number">Contact Number</label>
-                    </div>
-                    <div>
-                        <input type="text" name="customer_number">
-                    </div>
-                    <div>
-                        <label for="customer_email">Email Address</label>
-                    </div>
-                    <div>
-                        <input type="email" name="customer_email">
-                    </div>
-                </div>
-                <div class="input">
-                    
-                    Event Details
+            <?php 
 
-                    <select name="event" id="">
-                        <?php
-                            //to get data from database
-                            $sql = "SELECT * FROM events;";
-                            //execute the query
-                            $res = mysqli_query($conn, $sql);
-                            //count rows
-                            $count = mysqli_num_rows($res);
+            include('edit-orders.php');
 
-                            if($count > 0){
-                                while($row = mysqli_fetch_assoc($res)){
-                                    $title = $row['title'];
-                                    $id = $row['id'];
-                        ?>
-                            <option value="<?php echo $id; ?>"><?php echo $title; ?></option>
-                            <?php 
-                                }
-                            } 
-                        ?>
-                    </select>
-                    Time Start:
-                    <input type="datetime-local" name="event_start">
-                    Time End:
-                    <input type="datetime-local" name="event_end">
-                    <input type="text" name="event_address" placeholder="Address">                    
-                     
-                </div>
+            $booking = $_GET['id'];
 
+            if (isset($_SESSION['menu'])){
+                echo $_SESSION['menu'];
+                unset($_SESSION['menu']);
+            }
+
+        ?>
+            
+            <a href="<?php echo SITEURL; ?>admin/update.booking.php?id=<?php echo $booking; ?>" class="btn-blue btn">Back to booking details</a>
                 <!-----MENUS CHOICES------->
                 <h2>Menus</h2>
                 <div class="input">
@@ -123,7 +54,6 @@
                                 <br>
                                 Quantity:
                                 <input type="number" name="menu_qty[<?php echo $id; ?>]" min="1" max="10">
-                                
                             </div>
                             <?php 
                                 }
@@ -166,7 +96,6 @@
                                 <br>
                                 Quantity:
                                 <input type="number" name="extra_qty[<?php echo $id; ?>]" min="1" max="10">
-                                
                             </div>
                             <?php 
                                 }
@@ -174,19 +103,16 @@
                         ?>
                             
                     </div>
+                    <input type="hidden" value="<?php echo $booking; ?>" name="booking">
                 </div>
                 <center style="margin-top: 20px;">
                    <button class="button" type="submit" name="submit" >Submit</button> 
-     
                 </center>
-                
             </form>
         </div>
     </div>
 
+
 <?php
-   
-
-   include('partials-front/footer.php');
+    include('partials/footer.php');
 ?>
-

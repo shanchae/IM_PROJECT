@@ -4,11 +4,11 @@
 
     //Getting the id of admin to be deleted
     $extras_id = $_GET['extra_id'];
-    $id = $_GET['id'];
+    
     $booking = $_GET['booking'];
 
     //creating sql command to delete admin
-    $sql_extras = "DELETE FROM extras_bookings WHERE type=? AND bookingID = ?;";
+    $sql_extras = "DELETE FROM extras_bookings WHERE type = ? AND bookingID = ?;";
     $stmt_extras = $conn->prepare($sql_extras);
     $stmt_extras->bind_param("ii", $extras_id, $booking);
     $stmt_extras->execute();
@@ -39,25 +39,35 @@
     $total = $menu_total + $extras_total;
     $min = $total * .50;
 
+    $payid_query = "SELECT receiptID FROM bookings 
+                        WHERE id = ?;";
+        $pay = $conn->prepare($payid_query);
+        $pay->bind_param("i", $booking);
+        $pay->execute(); 
+        $res_pay_id = $pay->get_result(); 
+        $row_pay = $res_pay_id->fetch_assoc();
+        $payment_id = $row_pay['receiptID'] ;
+
     $sql_pay = "UPDATE payment_details 
             SET
             extras_total = ?,
             menus_total = ?,
             total = ?,
-            minPayment = ?;
+            minPayment = ?
+            WHERE id = ?;
           ";
 
 
     $stmt_pay = $conn->prepare($sql_pay);
-    $stmt_pay->bind_param("iiii", $extras_total, $menu_total, $total, $min);
+    $stmt_pay->bind_param("iiiii", $extras_total, $menu_total, $total, $min, $payment_id);
     $res = $stmt_pay->execute();
 
     if ($res == TRUE){
         //creating session 
         $_SESSION['delete'] = "<h2 class='success'>DELETED SUCCESSFULLY</h2>";
         //redirect to manage admin page
-        header('location:'.SITEURL.'admin/update.orders.php?booking='. $booking.'&id='.$id);
+        header('location:'.SITEURL.'admin/update.orders.php?booking='. $booking);
     } else {
         $_SESSION['delete'] = "<h2 class='failed'>DELETE FAILED</h2>";
-        header('location:'.SITEURL.'admin/update.orders.php?booking='. $booking.'&id='.$id);
+        header('location:'.SITEURL.'admin/update.orders.php?booking='. $booking);
     }

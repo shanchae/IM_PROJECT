@@ -11,8 +11,8 @@
         $start = mysqli_real_escape_string($conn, $_POST['event_start']);
         $end = mysqli_real_escape_string($conn, $_POST['event_end']);
         $address = mysqli_real_escape_string($conn, $_POST['event_address']);
-        $menus = $_POST['menu'];
-        $extras = $_POST['extra'];
+        $menu_qty = $_POST['menu_qty'];
+        $extra_qty = $_POST['extra_qty'];
         $booking_id = rand(000, 999);
         $event_id = rand(000, 999);
         $payment_id = rand(000, 999);
@@ -30,7 +30,7 @@
             die();
         }
 
-        if(empty($menus) || empty($extras)){
+        if(empty($_POST['menu']) && empty($_POST['extra'])){
             $_SESSION['menu'] = "<p class='failed'>PLEASE PICK YOUR MENU OR EXTRAS</p>";
 
             die();
@@ -76,54 +76,67 @@
         }
         
         //create menu record
-        $menu_query = "INSERT INTO menus_bookings
-            SET
-            bookingID = (
-                SELECT id
-                FROM bookings
-                WHERE id = ?),
-            type = (
-                SELECT id
-                FROM menus_types
-                WHERE id = ?);";
-
-        $menu_stmt = $conn->prepare($menu_query);
-        $menu_stmt->bind_param("ii", $booking_id, $menu);
-
-        foreach ($menus as $menu){
-           $res_menu = $menu_stmt->execute();
+        if (!empty($_POST['menu'])){
+            $menus = $_POST['menu'];
+            
+            $menu_query = "INSERT INTO menus_bookings
+                SET
+                quantity = ?,
+                bookingID = (
+                    SELECT id
+                    FROM bookings
+                    WHERE id = ?),
+                type = (
+                    SELECT id
+                    FROM menus_types
+                    WHERE id = ?);";
+    
+            $menu_stmt = $conn->prepare($menu_query);
+            $menu_stmt->bind_param("iii", $m_qty, $booking_id, $menu);
+     
+            foreach ($menus as $menu){
+                $m_qty = $menu_qty[$menu];
+                $res_menu = $menu_stmt->execute();
+            }
+    
+            if(!$res_menu){
+                echo $conn->error;
+            }
         }
-
-        if(!$res_menu){
-            echo $conn->error;
-        }
+        
 
         ///create extras record
-        $extras_query = "INSERT INTO extras_bookings
-            SET
-            bookingID = (
-                SELECT id
-                FROM bookings
-                WHERE id = ?),
-            type = (
-                SELECT id
-                FROM extras_types
-                WHERE id = ?);";
+        if (!empty($_POST['extra'])){
+            $extras = $_POST['extra'];
 
-        $extras_stmt = $conn->prepare($extras_query);
-        $extras_stmt->bind_param("ii", $booking_id, $extra);
-
-        foreach ($extras as $extra){
-            $res_extras = $extras_stmt->execute();
+            $extras_query = "INSERT INTO extras_bookings
+                SET
+                quantity = ?,
+                bookingID = (
+                    SELECT id
+                    FROM bookings
+                    WHERE id = ?),
+                type = (
+                    SELECT id
+                    FROM extras_types
+                    WHERE id = ?);";
+    
+            $extras_stmt = $conn->prepare($extras_query);
+            $extras_stmt->bind_param("iii", $e_qty, $booking_id, $extra);
+    
+            foreach ($extras as $extra){
+                $e_qty = $extra_qty[$extra];
+                $res_extras = $extras_stmt->execute();
+            }
+    
+        
+             if(!$res_extras){
+                 echo $conn->error;
+             }
         }
 
-    
-         if(!$res_extras){
-             echo $conn->error;
-         }
-
         //calculate fees
-        $menu_sql = "SELECT SUM(mt.price) as 'menu total'
+        $menu_sql = "SELECT SUM(mt.price * mb.quantity) as 'menu total'
         FROM menus_types mt, menus_bookings mb
         WHERE mt.id = mb.type
         AND mb.bookingID = ?;";
@@ -135,7 +148,7 @@
         $row_menu = $result_menu->fetch_assoc();
         $menu_total = $row_menu['menu total'];
 
-        $extras_sql = "SELECT SUM(et.price) as 'extras total'
+        $extras_sql = "SELECT SUM(et.price * eb.quantity) as 'extras total'
         FROM extras_types et, extras_bookings eb
         WHERE et.id = eb.type
         AND eb.bookingID = ?;";
